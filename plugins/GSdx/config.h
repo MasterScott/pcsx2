@@ -54,4 +54,6 @@
 
 #ifdef _WIN32
 //#define ENABLE_OPENCL
+// psx/ps1 emu compatibility is only supported on windows atm so no need to have the code enabled on linux too.
+#define PSXPS1_EMU_COMPATIBILITY
 #endif

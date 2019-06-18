@@ -22,7 +22,9 @@
 #include "stdafx.h"
 #include "GSdx.h"
 #include "GS.h"
+#ifdef PSXPS1_EMU_COMPATIBILITY
 #include "PSX/GPU.h"
+#endif
 
 static void* s_hModule;
 
@@ -314,6 +316,7 @@ void GSdxApp::Init()
 	m_gs_tv_shaders.push_back(GSSetting(4, "Wave filter", ""));
 
 	// PSX options that start with m_gpu.
+#ifdef PSXPS1_EMU_COMPATIBILITY
 	m_gpu_renderers.push_back(GSSetting(static_cast<int8>(GPURendererType::D3D11_SW), "Direct3D 11", "Software"));
 	m_gpu_renderers.push_back(GSSetting(static_cast<int8>(GPURendererType::NULL_Renderer), "Null", ""));
 
@@ -336,8 +339,16 @@ void GSdxApp::Init()
 	m_gpu_scale.push_back(GSSetting(1 | (2 << 2), "H x 2 - V x 4", ""));
 	m_gpu_scale.push_back(GSSetting(2 | (2 << 2), "H x 4 - V x 4", ""));
 
-	// Avoid to clutter the ini file with useless options
+	// PSX option. Not supported on linux.
+	m_default_configuration["dithering"]                                  = "1";
+	m_default_configuration["ModeRefreshRate"]                            = "0";
+	m_default_configuration["scale_x"]                                    = "0";
+	m_default_configuration["scale_y"]                                    = "0";
+	m_default_configuration["windowed"]                                   = "1";
+#endif
+
 #ifdef _WIN32
+	// Avoid to clutter the ini file with useless options
 	// Per OS option.
 	m_default_configuration["Adapter"]                                    = "default";
 	m_default_configuration["CaptureFileName"]                            = "";
@@ -349,13 +360,6 @@ void GSdxApp::Init()
 
 	// OpenCL device. Windows only for now.
 	m_default_configuration["ocldev"]                                     = "";
-
-	// PSX option. Not supported on linux.
-	m_default_configuration["dithering"]                                  = "1";
-	m_default_configuration["ModeRefreshRate"]                            = "0";
-	m_default_configuration["scale_x"]                                    = "0";
-	m_default_configuration["scale_y"]                                    = "0";
-	m_default_configuration["windowed"]                                   = "1";
 #else
 	m_default_configuration["linux_replay"]                               = "1";
 #endif
