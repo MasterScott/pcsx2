@@ -99,6 +99,8 @@ void s2r_close()
 ///////////////////////////////////////////////////////////////
 // replay code
 
+#ifdef _MSC_VER
+
 bool replay_mode = false;
 
 u16 dmabuffer[0xFFFFF];
@@ -112,8 +114,6 @@ u64 HighResPrev;
 double HighResScale;
 
 bool Running = false;
-
-#ifdef _MSC_VER
 
 int conprintf(const char *fmt, ...)
 {

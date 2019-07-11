@@ -172,12 +172,14 @@ const char *const x86_regnames_gpr32[] =
         "e8", "e9", "e10", "e11",
         "e12", "e13", "e14", "e15"};
 
+#ifdef __M_X86_64
 const char *const x86_regnames_gpr64[] =
     {
         "rax", "rcx", "rdx", "rbx",
         "rsp", "rbp", "rsi", "rdi",
         "r8", "r9", "r10", "r11",
         "r12", "r13", "r14", "r15"};
+#endif
 
 const char *const x86_regnames_sse[] =
     {
